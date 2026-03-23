@@ -1,46 +1,37 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
+    <!--  It was recommended to load this in before all other stylesheets, so I put it here at the top  -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Fines</title>
-    <link rel="stylesheet" th:href="@{/css/styles.css}">
+
+    <!--  Beautiful layout from here, with edits from me  -->
+    <link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/sign-in/">
+
+    <!-- Bootstrap core CSS -->
+    <link href="../../dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link rel="stylesheet" th:href="@{/css/home.css}">
 </head>
-<body>
-
-<div th:replace="~{fragments/header :: header}"></div>
-
-<main>
-    <div class="row">
-        <div class="col-sm-1"></div>
-        <div class="col-sm-10">
-            <table>
-                <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Reference</th>
-                    <th>Full Name</th>
-                    <th>PostCode</th>
-                    <th>Amount</th>
-                    <th>Deadline</th>
-                    <th>Status ID</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="c : ${fines}">
-                    <td th:text="${c.id}"></td>
-                    <td th:text="${c.reference}"></td>
-                    <td th:text="${c.full_name}"></td>
-                    <td th:text="${c.postcode}"></td>
-                    <td th:text="${c.amount}"></td>
-                    <td th:text="${c.deadline}"></td>
-                    <td th:text="${c.status_id}"></td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-        <div class="col-sm-1"></div>
+<body class="text-center">
+<form class="form-signin">
+    <img class="mb-4" src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
+    <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+    <label for="inputEmail" class="sr-only">Email address</label>
+    <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+    <label for="inputPassword" class="sr-only">Password</label>
+    <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+    <div class="checkbox mb-3">
+        <label>
+            <input type="checkbox" value="remember-me"> Remember me
+        </label>
     </div>
-
-</main>
-
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+    <p class="mt-5 mb-3 text-muted">&copy; 2017-2018</p>
+</form>
 </body>
 </html>

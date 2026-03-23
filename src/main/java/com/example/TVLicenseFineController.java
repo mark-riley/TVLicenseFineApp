@@ -4,8 +4,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @Controller
 @RequestMapping("/")
 public class TVLicenseFineController {
@@ -15,8 +13,13 @@ public class TVLicenseFineController {
     public TVLicenseFineController(TVLicenseFineRepository repo){this.repo = repo;}
 
     @GetMapping
-    public String list(Model model) {
-        model.addAttribute("fines", repo.findAll());
+    public String home(Model model) {
         return "fines/home";
+    }
+
+    @GetMapping("/test")
+    public String test(Model model) {
+        model.addAttribute("fines", repo.findAll());
+        return "fines/test";
     }
 }
