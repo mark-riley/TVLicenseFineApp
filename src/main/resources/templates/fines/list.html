@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>Fines</title>
+</head>
+<body>
+
+<main>
+    <div class="row">
+        <div class="col-sm-1"></div>
+        <div class="col-sm-10">
+            <table>
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Reference</th>
+                    <th>Full Name</th>
+                    <th>PostCode</th>
+                    <th>Amount</th>
+                    <th>Deadline</th>
+                    <th>Status ID</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="c : ${fines}">
+                    <td th:text="${c.id}"></td>
+                    <td th:text="${c.reference}"></td>
+                    <td th:text="${c.full_name}"></td>
+                    <td th:text="${c.postcode}"></td>
+                    <td th:text="${c.amount}"></td>
+                    <td th:text="${c.deadline}"></td>
+                    <td th:text="${c.status_id}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-sm-1"></div>
+    </div>
+
+</main>
+
+</body>
+</html>
