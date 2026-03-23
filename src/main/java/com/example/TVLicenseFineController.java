@@ -17,6 +17,6 @@ public class TVLicenseFineController {
     @GetMapping
     public String list(Model model) {
         model.addAttribute("fines", repo.findAll());
-        return "fines/list";
+        return "fines/home";
     }
 }

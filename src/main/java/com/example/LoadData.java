@@ -12,10 +12,7 @@ public class LoadData {
         return args -> {
 //            This is data for testing.  I have commented it out to stop the database re-seeding
 //            itself every time the app compiles.
-//            repository.save(new Course("Spring Boot Basics", "Mark"));
-//            repository.save(new Course("REST APIs", "Alastair"));
-//            repository.save(new Course("How To Use Azure Databases", "MarkR"));
-            repository.save(new TVLicenseFine("Test", "Test", "Test", 12.34, "Test", 2));
+//            repository.save(new TVLicenseFine("Test", "Test", "Test", 12.34, "Test", 2));
 
         };
     }
