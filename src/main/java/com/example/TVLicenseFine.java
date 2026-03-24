@@ -53,4 +53,5 @@ public class TVLicenseFine {
     public void setStatus(TVLicenseStatus status) {
         this.status = status;
     }
+
 }

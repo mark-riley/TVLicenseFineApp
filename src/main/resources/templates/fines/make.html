@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -17,115 +17,109 @@
 <div class="service-header" role="navigation">
     <div class="content-wrapper service-wrapper">
         <div class="language-toggle">
-
             English | <a href="#" lang="cy" class="lang-link">Cymraeg</a>
         </div>
     </div>
 </div>
 
 <main class="content-wrapper govuk-main-wrapper" id="main-content" role="main">
-    <fieldset class="govuk-fieldset">
-        <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
-            <h1 class="govuk-fieldset__heading heading-xl">
+    <div th:if="${fine}">
+        <fieldset class="govuk-fieldset">
+            <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
+                <h1 class="govuk-fieldset__heading heading-xl">
+                    Make a court fine payment
+                </h1>
+            </legend>
 
-                Make a court fine payment
-            </h1>
-        </legend>
-
-        <div class="verification-review-panel govuk-inset-text u-margin-bottom-l">
-            <p class="govuk-body-l govuk-body--bold">
-
-                Fine Reference Number:
-                <span class="value accent">#REF-001234</span>
-            </p>
-            <p class="govuk-body-l">
-
-                Payee name:
-                <span class="value accent">"Jane Doe"</span>
-            </p>
-            <p class="helper-text govuk-body-m">
-
-                Amount due: <span class="value">£250.00</span>
-                <br>
-
-                Due Date: <span class="value">15/09/2026</span>
-            </p>
-        </div>
-
-        <hr class="divider" />
-
-        <form action="payment_receipt.html" method="post">
-            <div class="govuk-form-group">
-                <label class="govuk-label govuk-label--m" for="payment-amount">
-
-                    Payment Amount
-                </label>
-                <span class="govuk-hint govuk-hint--m u-margin-bottom-s">
-
-                        Enter any amount up to £250.00.
-</span>
-                <div class="govuk-currency-input">
-                    <span class="govuk-currency-input__symbol">£</span>
-                    <input class="govuk-input govuk-input--width-10" id="payment-amount" name="payment-amount" type="number" step="0.01" min="0.01" required>
-                </div>
+            <div class="verification-review-panel govuk-inset-text u-margin-bottom-l">
+                <p class="govuk-body-l govuk-body--bold">
+                    Fine Reference Number:
+                    <span class="value accent" th:text="${fine.reference}">#REF-001234</span>
+                </p>
+                <p class="govuk-body-l">
+                    Payee name:
+                    <span class="value accent" th:text="${fine.full_name}">"Jane Doe"</span>
+                </p>
+                <p class="helper-text govuk-body-m">
+                    Amount due:
+                    <span class="value" th:text="'£' + ${fine.amount}">£250.00</span>
+                    <br>
+                    Due Date:
+                    <span class="value" th:text="${fine.deadline}">15/09/2026</span>
+                </p>
             </div>
 
-            <div class="govuk-form-group">
-                <label class="govuk-label govuk-label--m" for="email-address">
+            <hr class="divider" />
 
-                    Email (for receipt)
-                </label>
-                <span class="govuk-hint govuk-hint--m u-margin-bottom-s">
+            <form th:action="@{/submit-payment}" method="post">
+                <input type="hidden" name="fineId" th:value="${fine.id}">
 
-                        (Optional) We'll only use this to send you a receipt.
-</span>
-                <input class="govuk-input" id="email-address" name="email-address" type="email" autocomplete="email">
-            </div>
-
-            <div class="govuk-form-group">
-                <fieldset class="govuk-fieldset" aria-describedby="payment-hint">
-                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
-
-                        Choose how to pay
-                    </legend>
-                    <span id="payment-hint" class="govuk-hint">
-
-                            Select a secure payment provider.
-</span>
-                    <div class="govuk-radios">
-                        <div class="govuk-radios__item">
-                            <input class="govuk-radios__input" id="processor-1" name="payment-processor" type="radio" value="processor-1" style="float:left;" required>
-                            <label class="govuk-label govuk-radios__label" for="processor-1">
-
-                                Payment Processor #1
-                            </label>
-                        </div>
-                        <div class="govuk-radios__item">
-                            <input class="govuk-radios__input" id="processor-2" name="payment-processor" type="radio" value="processor-2" style="float:left;">
-                            <label class="govuk-label govuk-radios__label" for="processor-2">
-
-                                Payment Processor #2
-                            </label>
-                        </div>
-                        <div class="govuk-radios__item">
-                            <input class="govuk-radios__input" id="processor-3" name="payment-processor" type="radio" value="processor-3" style="float:left;">
-                            <label class="govuk-label govuk-radios__label" for="processor-3">
-
-                                Payment Processor #3
-                            </label>
-                        </div>
+                <div class="govuk-form-group">
+                    <label class="govuk-label govuk-label--m" for="payment-amount">
+                        Payment Amount
+                    </label>
+                    <span class="govuk-hint govuk-hint--m u-margin-bottom-s">
+                        Enter any amount up to <span th:text="'£' + ${fine.amount}">£250.00</span>.
+                    </span>
+                    <div class="govuk-currency-input">
+                        <span class="govuk-currency-input__symbol">£</span>
+                        <input class="govuk-input govuk-input--width-10" id="payment-amount"
+                               name="amountPaid" type="number" step="0.01" min="0.01"
+                               th:value="${fine.amount}" required>
                     </div>
-                </fieldset>
-            </div>
+                </div>
 
-            <div class="actions u-margin-top-l">
-                <button type="submit" class="govuk-button btn-confirm">
+                <div class="govuk-form-group">
+                    <label class="govuk-label govuk-label--m" for="email-address">
+                        Email (for receipt)
+                    </label>
+                    <span class="govuk-hint govuk-hint--m u-margin-bottom-s">
+                        (Optional) We'll only use this to send you a receipt.
+                    </span>
+                    <input class="govuk-input" id="email-address" name="email" type="email" autocomplete="email">
+                </div>
 
-                    Submit
-                </button>
-            </div>
-        </form>
-    </fieldset>
+                <div class="govuk-form-group">
+                    <fieldset class="govuk-fieldset" aria-describedby="payment-hint">
+                        <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
+                            Choose how to pay
+                        </legend>
+                        <span id="payment-hint" class="govuk-hint">
+                            Select a secure payment provider.
+                        </span>
+                        <div class="govuk-radios">
+                            <div class="govuk-radios__item">
+                                <input class="govuk-radios__input" id="processor-1" name="payment-processor" type="radio" value="GOV_PAY" checked required>
+                                <label class="govuk-label govuk-radios__label" for="processor-1">
+                                    GOV.UK Pay (Secure Card Payment)
+                                </label>
+                            </div>
+                            <div class="govuk-radios__item">
+                                <input class="govuk-radios__input" id="processor-2" name="payment-processor" type="radio" value="PAYPAL">
+                                <label class="govuk-label govuk-radios__label" for="processor-2">
+                                    PayPal
+                                </label>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+
+                <div class="actions u-margin-top-l">
+                    <button type="submit" class="govuk-button btn-confirm">
+                        Continue to Payment
+                    </button>
+                </div>
+            </form>
+        </fieldset>
+    </div>
+
+    <div th:unless="${fine}" class="govuk-error-summary">
+        <h2 class="govuk-error-summary__title">Fine not found</h2>
+        <div class="govuk-error-summary__body">
+            <p>Please return to the search page and try again.</p>
+            <a href="/find-fine" class="govuk-link">Return to search</a>
+        </div>
+    </div>
 </main>
 
 <footer class="main-footer" role="contentinfo">

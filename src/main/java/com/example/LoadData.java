@@ -26,8 +26,8 @@ public class LoadData {
     @Bean
     public CommandLineRunner initData(TVLicenseStatusRepository statusRepo, TVLicenseFineRepository fineRepo) {
         return args -> {
-            TVLicenseStatus paidStatus = statusRepo.findById(1L).orElseThrow();
-            fineRepo.save(new TVLicenseFine("Test2", "Test2", "Test2", new BigDecimal("22.34"), "Test2", paidStatus));
+//            TVLicenseStatus paidStatus = statusRepo.findById(1L).orElseThrow();
+//            fineRepo.save(new TVLicenseFine("TVL-1034-QWL", "James O", "BT1 1AA", new BigDecimal("1000.00"), "12/12/2025", paidStatus));
         };
     }
 }

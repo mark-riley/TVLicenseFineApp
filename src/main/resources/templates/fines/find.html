@@ -26,43 +26,29 @@
 <main class="content-wrapper govuk-main-wrapper" id="main-content" role="main">
     <fieldset class="govuk-fieldset">
         <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
-            <h1 class="govuk-fieldset__heading heading-xl">
-
-                Find your fine details
-            </h1>
+            <h1 class="govuk-fieldset__heading heading-xl">Find your fine details</h1>
         </legend>
 
         <p class="helper-text govuk-body-m u-margin-bottom-l">
-
             Enter your reference details exactly as they appear on your notice.
         </p>
-
-        <form action="payment_form.html" method="post">
+        <div th:if="${error}" class="govuk-error-summary" style="border: 4px solid #d4351c; padding: 15px; margin-bottom: 20px;">
+            <h2 style="color: #d4351c; margin-top: 0;">There is a problem</h2>
+            <p th:text="${error}" style="color: #d4351c; font-weight: bold;"></p>
+        </div>
+        <form action="/find-fine" method="post">
             <div class="govuk-form-group">
-                <label class="govuk-label govuk-label--m" for="reference-id">
-
-                    Reference ID
-                </label>
-                <span class="govuk-hint govuk-hint--m u-margin-bottom-s">
-
-                        Found on the top right of your notice.
-</span>
-                <input class="govuk-input" id="reference-id" name="reference-id" type="text" autocomplete="off" required>
+                <label class="govuk-label govuk-label--m" for="reference-id">Reference ID</label>
+                <input class="govuk-input" id="reference-id" name="reference" type="text" required>
             </div>
 
             <div class="govuk-form-group">
-                <label class="govuk-label govuk-label--m" for="verification-data">
-
-                    2nd form of data for verification
-                </label>
-                <input class="govuk-input" id="verification-data" name="verification-data" type="text" autocomplete="off" required>
+                <label class="govuk-label govuk-label--m" for="verification-data">Postcode</label>
+                <input class="govuk-input" id="verification-data" name="postcode" type="text" required>
             </div>
 
             <div class="actions u-margin-top-l">
-                <button type="submit" class="govuk-button btn-confirm">
-
-                    Submit
-                </button>
+                <button type="submit" class="govuk-button btn-confirm">Submit</button>
             </div>
         </form>
     </fieldset>
