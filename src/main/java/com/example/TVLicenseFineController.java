@@ -22,4 +22,17 @@ public class TVLicenseFineController {
         model.addAttribute("fines", repo.findAll());
         return "fines/test";
     }
+
+    @GetMapping("/confirmation")
+    public String confirmation(Model model) {
+        model.addAttribute("fines", repo.findAll());
+        return "fines/confirmation";
+    }
+    @GetMapping("/find")
+    public String find(Model model) {
+        return "fines/find";
+    }
+
+    @GetMapping("/make")
+    public String make(Model model) { return "fines/make";}
 }

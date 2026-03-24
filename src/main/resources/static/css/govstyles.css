@@ -1,0 +1,183 @@
+:root {
+
+  --govuk-brand-blue: #1d70b8;
+
+  --govuk-text-black: #0b0c0c;
+
+  --govuk-secondary-text: #505a5f;
+
+  --govuk-green: #00703c;
+
+  --govuk-green-hover: #005a30;
+
+  --govuk-border-light: #b1b4b6;
+
+  --govuk-focus-yellow: #ffdd00;
+
+  --govuk-page-bg: #ffffff;
+
+  --govuk-footer-bg: #f3f2f1;
+
+}
+
+* { box-sizing: border-box; }
+
+body {
+
+  font-family: Arial, sans-serif;
+
+  color: var(--govuk-text-black);
+
+  background-color: var(--govuk-page-bg);
+
+  margin: 0;
+
+  line-height: 1.5;
+
+}
+
+/* --- Header & Service Bar --- */
+
+.main-header {
+
+  background-color: var(--govuk-brand-blue);
+
+  padding: 10px 0;
+
+}
+
+.header-wrapper, .service-wrapper, .content-wrapper {
+
+  max-width: 960px;
+
+  margin: 0 auto;
+
+  padding: 0 15px;
+
+}
+
+.logo span::before {
+
+  content: "GOV.UK";
+
+  color: white;
+
+  font-size: 30px;
+
+  font-weight: bold;
+
+}
+
+.service-header {
+
+  border-bottom: 1px solid var(--govuk-border-light);
+
+  padding: 10px 0;
+
+}
+
+.service-wrapper {
+
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: baseline;
+
+}
+
+.service-name {
+
+  font-weight: bold;
+
+  font-size: 1.2rem;
+
+  text-decoration: underline;
+
+}
+
+.language-toggle {
+
+  font-size: 0.9rem;
+
+}
+
+.lang-link { color: var(--govuk-brand-blue); }
+
+/* --- Main Content --- */
+
+.content-wrapper { padding-top: 30px; padding-bottom: 30px; }
+
+h1 { font-size: 2.5rem; margin-top: 10px; margin-bottom: 10px; }
+
+h2 { font-size: 1.5rem; margin-bottom: 10px; }
+
+.divider { border: 0; border-top: 1px solid var(--govuk-border-light); margin: 30px 0; }
+
+/* --- Confirmation Page Specifics --- */
+
+.confirmation-details { margin-bottom: 20px; }
+
+.data-line { margin: 5px 0; font-size: 1.1rem; }
+
+.data-line strong { font-weight: bold; }
+
+.receipt-link {
+
+  display: flex;
+
+  align-items: center;
+
+  color: #1d70b8;
+
+  text-decoration: underline;
+
+  margin-top: 20px;
+
+}
+
+.receipt-link svg { margin-right: 8px; }
+
+/* --- Form Elements --- */
+
+.govuk-form-group { margin-bottom: 20px; }
+
+.govuk-label { display: block; font-weight: bold; margin-bottom: 5px; }
+
+.govuk-hint { color: var(--govuk-secondary-text); font-size: 0.9rem; margin-bottom: 5px; display: block; }
+
+.govuk-input { width: 100%; max-width: 300px; padding: 8px; border: 2px solid var(--govuk-text-black); }
+
+.govuk-button {
+
+  background-color: var(--govuk-green);
+
+  color: white;
+
+  padding: 10px 20px;
+
+  border: none;
+
+  font-weight: bold;
+
+  cursor: pointer;
+
+  box-shadow: 0 2px 0 #002d18;
+
+}
+
+.govuk-button:hover { background-color: var(--govuk-green-hover); }
+
+/* --- Footer --- */
+
+.main-footer {
+
+  background-color: var(--govuk-footer-bg);
+
+  min-height: 150px;
+
+  border-top: 1px solid var(--govuk-border-light);
+
+  margin-top: 50px;
+
+}

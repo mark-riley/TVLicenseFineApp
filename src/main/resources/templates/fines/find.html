@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Find Your Fine - Court Fines - GOV.UK</title>
+    <link rel="stylesheet" href="/css/govstyles.css" />
+</head>
+<body class="govuk-template__body">
+
+<header class="main-header" role="banner">
+    <div class="header-wrapper">
+        <h1 class="logo"><span></span></h1>
+    </div>
+</header>
+
+<div class="service-header" role="navigation">
+    <div class="content-wrapper service-wrapper">
+        <div class="service-name">HMCTS court fines</div>
+        <div class="language-toggle">
+
+            English | <a href="#" lang="cy" class="lang-link">Cymraeg</a>
+        </div>
+    </div>
+</div>
+
+<main class="content-wrapper govuk-main-wrapper" id="main-content" role="main">
+    <fieldset class="govuk-fieldset">
+        <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
+            <h1 class="govuk-fieldset__heading heading-xl">
+
+                Find your fine details
+            </h1>
+        </legend>
+
+        <p class="helper-text govuk-body-m u-margin-bottom-l">
+
+            Enter your reference details exactly as they appear on your notice.
+        </p>
+
+        <form action="payment_form.html" method="post">
+            <div class="govuk-form-group">
+                <label class="govuk-label govuk-label--m" for="reference-id">
+
+                    Reference ID
+                </label>
+                <span class="govuk-hint govuk-hint--m u-margin-bottom-s">
+
+                        Found on the top right of your notice.
+</span>
+                <input class="govuk-input" id="reference-id" name="reference-id" type="text" autocomplete="off" required>
+            </div>
+
+            <div class="govuk-form-group">
+                <label class="govuk-label govuk-label--m" for="verification-data">
+
+                    2nd form of data for verification
+                </label>
+                <input class="govuk-input" id="verification-data" name="verification-data" type="text" autocomplete="off" required>
+            </div>
+
+            <div class="actions u-margin-top-l">
+                <button type="submit" class="govuk-button btn-confirm">
+
+                    Submit
+                </button>
+            </div>
+        </form>
+    </fieldset>
+</main>
+
+<footer class="main-footer" role="contentinfo">
+</footer>
+
+</body>
+</html>
