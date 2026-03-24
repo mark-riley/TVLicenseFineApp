@@ -1,13 +1,11 @@
 package com.example;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 
 @Entity
+@Table(name = "tv_license_fines")
 public class TVLicenseFine {
 
     @Id
@@ -19,17 +17,19 @@ public class TVLicenseFine {
     private String postcode;
     private BigDecimal amount;
     private String deadline;
-    private Integer status_id;
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "status_id", nullable = false)
+    private TVLicenseStatus status;
 
     public TVLicenseFine() {}
 
-    public TVLicenseFine(String reference, String full_name, String postcode, BigDecimal amount, String deadline, Integer status_id){
+    public TVLicenseFine(String reference, String full_name, String postcode, BigDecimal amount, String deadline, TVLicenseStatus status){
         this.reference = reference;
         this.full_name = full_name;
         this.postcode = postcode;
         this.amount = amount;
         this.deadline = deadline;
-        this.status_id = status_id;
+        this.status = status;
     }
 
     public String getReference() {return reference;}
@@ -37,7 +37,6 @@ public class TVLicenseFine {
     public String getPostcode() {return postcode;}
     public String getAmount() {return amount.toString();}
     public String getDeadline() {return deadline;}
-    public String getStatus_id() {return status_id.toString();}
 
     public Long getId() {return id;}
 
@@ -46,5 +45,12 @@ public class TVLicenseFine {
     public void setPostcode(String postcode) {this.postcode = postcode;}
     public void setAmount(BigDecimal amount) {this.amount = amount;}
     public void setDeadline(String deadline) {this.deadline = deadline;}
-    public void setStatus_id(Integer status_id) {this.status_id = status_id;}
+
+    public TVLicenseStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(TVLicenseStatus status) {
+        this.status = status;
+    }
 }
