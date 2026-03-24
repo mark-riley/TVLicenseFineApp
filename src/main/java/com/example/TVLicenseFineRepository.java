@@ -8,7 +8,9 @@ import java.util.List;
 public interface TVLicenseFineRepository extends CrudRepository<TVLicenseFine, Long> {
     // Use 'TVLicenseFine' (the class name), not 'tv_license_fines' (the table name)
 
-    @Query("SELECT c FROM TVLicenseFine c WHERE LOWER(c.reference) LIKE LOWER(CONCAT('%', :reference, '%')) OR LOWER(c.postcode) LIKE LOWER(CONCAT('%', :postcode, '%'))")
+    @Query("SELECT c FROM TVLicenseFine c \n" +
+            "WHERE LOWER(c.reference) = LOWER(:reference) \n" +
+            "AND REPLACE(c.postcode, ' ', '') = REPLACE(LOWER(:postcode), ' ', '')")
     List<TVLicenseFine> findByReferenceAndPostcode(String reference, String postcode);
 }
 
