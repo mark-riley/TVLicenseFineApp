@@ -5,6 +5,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
+import java.math.BigDecimal;
+
 @Entity
 public class TVLicenseFine {
 
@@ -15,13 +17,13 @@ public class TVLicenseFine {
     private String reference;
     private String full_name;
     private String postcode;
-    private Double amount;
+    private BigDecimal amount;
     private String deadline;
     private Integer status_id;
 
     public TVLicenseFine() {}
 
-    public TVLicenseFine(String reference, String full_name, String postcode, Double amount, String deadline, Integer status_id){
+    public TVLicenseFine(String reference, String full_name, String postcode, BigDecimal amount, String deadline, Integer status_id){
         this.reference = reference;
         this.full_name = full_name;
         this.postcode = postcode;
@@ -42,7 +44,7 @@ public class TVLicenseFine {
     public void setReference(String reference) {this.reference = reference;}
     public void setFull_name(String full_name) {this.full_name = full_name;}
     public void setPostcode(String postcode) {this.postcode = postcode;}
-    public void setAmount(Double amount) {this.amount = amount;}
+    public void setAmount(BigDecimal amount) {this.amount = amount;}
     public void setDeadline(String deadline) {this.deadline = deadline;}
     public void setStatus_id(Integer status_id) {this.status_id = status_id;}
 }
