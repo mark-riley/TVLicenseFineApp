@@ -1,51 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Payment Confirmation - GOV.UK</title>
-    <link rel="stylesheet" href="/css/govstyles.css">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Payment Confirmation</title>
+    <link rel="stylesheet" href="/css/govstyles.css" />
 </head>
 <body>
+
 <header class="main-header">
     <div class="header-wrapper"><h1 class="logo"><span></span></h1></div>
 </header>
 
-<div class="service-header">
-    <div class="service-wrapper">
-        <div class="service-name">HMCTS court fines</div>
-        <div class="language-toggle">English | <a href="#" class="lang-link">Cymraeg</a></div>
-    </div>
-</div>
-
 <main class="content-wrapper">
-    <h1 th:text="'Transaction ID: ' + ${fine.transactionId}">Transaction ID: #000-0000-000</h1>
+    <section class="receipt-card">
+        <div class="status-badge">Success</div>
+        <h2 class="transaction-title">Transaction ID: <span id="transaction-id">#000-0000-000</span></h2>
+        <p class="helper-text">If you have provided an email you should receive one shortly</p>
 
-    <p>If you have provided an email you should receive one shortly</p>
-    <hr class="divider">
+        <hr class="divider" />
 
-    <div class="confirmation-details">
-        <p class="data-line">
-            Amount Paid
-            <strong th:text="'£' + ${fine.amountPaid}">£0.00</strong>
-        </p>
+        <div class="data-grid">
+            <div class="data-row">
+                <span class="label">Amount Paid</span>
+                <span id="amount-paid" class="value accent">£0.00</span>
+            </div>
+            <div class="data-row">
+                <span class="label">Amount Remaining</span>
+                <span id="amount-remaining" class="value">£0.00</span>
+            </div>
+            <div class="data-row">
+                <span class="label">Payment Status</span>
+                <span id="payment-status" class="value status-text">Pending</span>
+            </div>
+        </div>
 
-        <p class="data-line" th:text="'Amount Remaining £' + ${fine.amountRemaining}">
-            Amount Remaining £0.00
-        </p>
+        <div class="actions">
+            <a href="#" class="btn-download">
+                <a href="#" class="receipt-link">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="7 10 12 15 17 10"></polyline>
+                        <line x1="12" y1="15" x2="12" y2="3"></line>
+                    </svg>
+                    Download PDF Receipt
+                </a>
 
-        <p class="data-line" th:text="'Payment Status ' + ${fine.status}">
-            Payment Status Pending
-        </p>
-    </div>
-
-    <a href="#" class="receipt-link">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-            <polyline points="7 10 12 15 17 10"></polyline>
-            <line x1="12" y1="15" x2="12" y2="3"></line>
-        </svg>
-        Download PDF Receipt
-    </a>
+                Download PDF Receipt
+            </a>
+        </div>
+    </section>
 </main>
 
 <footer class="main-footer"></footer>
