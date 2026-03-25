@@ -13,7 +13,9 @@ public interface TVLicenseTransactionRepository extends CrudRepository<TVLicense
 
     List<TVLicenseTransaction> findByFine(TVLicenseFine fine);
 
-    // Efficiently queries the database for the specific client ID
     @Query("SELECT t FROM TVLicenseTransaction t WHERE t.client_transaction_id = :clientId")
     Optional<TVLicenseTransaction> findByClientTransactionId(@Param("clientId") String clientId);
+
+    @Query("SELECT t FROM TVLicenseTransaction t WHERE t.processor_token = :token")
+    Optional<TVLicenseTransaction> findByProcessorToken(@Param("token") String token);
 }
