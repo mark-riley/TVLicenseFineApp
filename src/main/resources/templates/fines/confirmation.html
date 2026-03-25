@@ -1,52 +1,45 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Payment Confirmation</title>
     <link rel="stylesheet" href="/css/govstyles.css" />
 </head>
-<body>
+<body class="govuk-template__body">
 
 <header class="main-header">
     <div class="header-wrapper"><h1 class="logo"><span></span></h1></div>
 </header>
 
-<main class="content-wrapper">
+<main class="content-wrapper govuk-main-wrapper">
     <section class="receipt-card">
-        <h2 class="transaction-title">Transaction ID: <span id="transaction-id">#000-0000-000</span></h2>
-        <p class="helper-text">If you have provided an email you should receive one shortly</p>
+
+        <div class="govuk-panel govuk-panel--confirmation" style="background-color: #00703c; color: white; padding: 20px; text-align: center; margin-bottom: 30px;">
+            <h1 class="govuk-panel__title" style="color: white; margin: 0;">Payment complete</h1>
+        </div>
+
+        <h2 class="govuk-heading-m">Transaction ID: <span id="transaction-id" th:text="${transactionId}">#000-0000-000</span></h2>
+
+        <p class="govuk-body" th:if="${fine}">
+            Your payment for reference <strong th:text="${fine.reference}"></strong> has been successfully processed.
+        </p>
 
         <hr class="divider" />
 
-        <div class="data-grid">
+        <div class="data-grid" style="margin-bottom: 30px;">
             <div class="data-row">
-                <span class="label">Amount Paid</span>
-                <span id="amount-paid" class="value accent">£0.00</span>
+                <span class="label">Amount Paid:</span>
+                <strong id="amount-paid" class="value accent" th:text="'£' + ${amountPaid}">£0.00</strong>
             </div>
             <div class="data-row">
-                <span class="label">Amount Remaining</span>
-                <span id="amount-remaining" class="value">£0.00</span>
-            </div>
-            <div class="data-row">
-                <span class="label">Payment Status</span>
-                <span id="payment-status" class="value status-text">Pending</span>
+                <span class="label">Payment Status:</span>
+                <strong id="payment-status" class="value status-text" style="color: green;">Paid</strong>
             </div>
         </div>
 
         <div class="actions">
-            <a href="#" class="btn-download">
-                <a href="#" class="receipt-link">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                        <polyline points="7 10 12 15 17 10"></polyline>
-                        <line x1="12" y1="15" x2="12" y2="3"></line>
-                    </svg>
-                    Download PDF Receipt
-                </a>
-
-                Download PDF Receipt
-            </a>
+            <a href="/" class="govuk-button">Return to main menu</a>
         </div>
     </section>
 </main>
