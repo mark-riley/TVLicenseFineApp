@@ -28,8 +28,6 @@ body {
 
 .main-header {
   background-color: var(--govuk-brand-blue);
-  padding: 10px 0;
-  border-bottom: 10px solid var(--govuk-focus-yellow);
 }
 
 .content-wrapper { padding-top: 30px; padding-bottom: 30px; }
