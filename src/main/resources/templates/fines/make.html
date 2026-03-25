@@ -7,30 +7,51 @@
     <link rel="stylesheet" th:href="@{/css/govstyles.css}">
 </head>
 <body class="govuk-template__body">
-<header class="main-header">
-    <div class="header-wrapper"><h1 style="color:white; margin:0;">GOV.UK</h1></div>
+
+<header class="main-header" role="banner">
+    <div class="header-wrapper">
+        <h1 style="color:white; margin:0; padding: 15px 0;">GOV.UK</h1>
+    </div>
 </header>
+
+<section class="govuk-language-select">
+    <div class="header-wrapper">
+        <ul>
+            <li>
+                <span th:if="${#locale.language == 'en'}" class="active-lang">English</span>
+                <a th:if="${#locale.language != 'en'}" 
+                   th:href="@{/direct-pay/{ref}/{pc}(ref=${fine.reference}, pc=${fine.postcode}, lang='en')}">English</a>
+            </li>
+            <li style="color: #b1b4b6;">|</li>
+            <li>
+                <span th:if="${#locale.language == 'cy'}" class="active-lang">Cymraeg</span>
+                <a th:if="${#locale.language != 'cy'}" 
+                   th:href="@{/direct-pay/{ref}/{pc}(ref=${fine.reference}, pc=${fine.postcode}, lang='cy')}">Cymraeg</a>
+            </li>
+        </ul>
+    </div>
+</section>
 <main class="content-wrapper govuk-main-wrapper">
-    <h1 class="govuk-heading-xl">Check fine details</h1>
+    <h1 class="govuk-heading-xl" th:text="#{make.title}">Check fine details</h1>
 
     <div class="govuk-inset-text" style="background: #f3f2f1; padding: 20px; border-left: 10px solid #b1b4b6;">
-        <p class="govuk-body"><strong>Fine Reference:</strong> <span th:text="${fine.reference}"></span></p>
-        <p class="govuk-body"><strong>Full Name:</strong> <span th:text="${fine.full_name}"></span></p>
-        <p class="govuk-body"><strong>Total Fine Amount:</strong> <span th:text="'£' + ${totalAmount}"></span></p>
-        <p class="govuk-body"><strong>Outstanding Balance:</strong> <span style="color: #d4351c; font-weight: bold;" th:text="'£' + ${outstanding}"></span></p>
+        <p class="govuk-body"><strong th:text="#{make.ref}">Fine Reference:</strong> <span th:text="${fine.reference}"></span></p>
+        <p class="govuk-body"><strong th:text="#{make.name}">Full Name:</strong> <span th:text="${fine.full_name}"></span></p>
+        <p class="govuk-body"><strong th:text="#{make.total}">Total Fine Amount:</strong> <span th:text="'£' + ${totalAmount}"></span></p>
+        <p class="govuk-body"><strong th:text="#{make.outstanding}">Outstanding Balance:</strong> <span style="color: #d4351c; font-weight: bold;" th:text="'£' + ${outstanding}"></span></p>
     </div>
 
     <form th:action="@{/submit-payment}" method="post">
         <input type="hidden" name="fineId" th:value="${fine.id}">
         <div class="govuk-form-group">
-            <label class="govuk-label" for="amountPaid">Amount to pay (£)</label>
-            <div id="hint" class="govuk-hint">Enter an amount up to <span th:text="'£' + ${outstanding}"></span></div>
+            <label class="govuk-label" for="amountPaid" th:text="#{make.amount.label}">Amount to pay (£)</label>
+            <div id="hint" class="govuk-hint"><span th:text="#{make.amount.hint}">Enter an amount up to</span> <span th:text="'£' + ${outstanding}"></span></div>
             <input class="govuk-input" id="amountPaid" name="amountPaid"
                    type="number" step="0.01" min="0.30"
                    th:max="${outstanding}" value=""
                    placeholder="0.00" required>
         </div>
-        <button type="submit" class="govuk-button" style="background-color: #00703c;">Continue to payment</button>
+        <button type="submit" class="govuk-button" style="background-color: #00703c;" th:text="#{make.btn}">Continue to payment</button>
     </form>
 </main>
 </body>

@@ -92,6 +92,36 @@ html, body {
   text-align: center;
   cursor: pointer;
 }
+/* --- Language Toggle Bar --- */
+.govuk-language-select {
+  border-bottom: 1px solid var(--govuk-border-light);
+  padding: 10px 0;
+  font-size: 0.875rem;
+}
+
+.govuk-language-select ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  justify-content: flex-end; /* Aligns toggle to the right */
+  gap: 10px;
+}
+
+.govuk-language-select li {
+  display: inline-block;
+}
+
+.govuk-language-select a {
+  color: var(--govuk-brand-blue);
+  text-decoration: underline;
+}
+
+.govuk-language-select .active-lang {
+  font-weight: bold;
+  color: var(--govuk-text-black);
+  text-decoration: none;
+}
 
 @media (max-width: 640px) {
   .govuk-button { width: 100%; }

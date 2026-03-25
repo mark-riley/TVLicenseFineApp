@@ -3,17 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Find your fine - GOV.UK</title>
+    <title th:text="#{find.title} + ' - GOV.UK'">Find your fine - GOV.UK</title>
     <link rel="stylesheet" th:href="@{/css/govstyles.css}">
 </head>
 <body>
 <header class="main-header">
-    <div class="header-wrapper"><h1 style="color:white; margin:0;">GOV.UK</h1></div>
+    <div class="header-wrapper">
+        <h1 style="color:white; margin:0; display:inline-block;">GOV.UK</h1>
+        
+        <div style="float: right; margin-top: 5px; color: white;">
+            <span th:if="${#locale.language == 'en'}"><strong>English</strong> | <a th:href="@{/(lang='cy')}" style="color: white; text-decoration: underline;">Cymraeg</a></span>
+            <span th:if="${#locale.language == 'cy'}"><a th:href="@{/(lang='en')}" style="color: white; text-decoration: underline;">English</a> | <strong>Cymraeg</strong></span>
+        </div>
+    </div>
 </header>
 
 <main class="content-wrapper">
-    <h1>Find your fine</h1>
-    <p class="govuk-body">Enter your details to view your outstanding TV license fine and make a payment.</p>
+    <h1 th:text="#{find.title}">Find your fine</h1>
+    <p class="govuk-body" th:text="#{find.desc}">Enter your details to view your outstanding TV license fine and make a payment.</p>
 
     <div th:if="${error}" class="govuk-error-summary">
         <p th:text="${error}"></p>
@@ -25,18 +32,18 @@
 
     <form th:action="@{/find-fine}" method="post">
         <div class="govuk-form-group">
-            <label class="govuk-label" for="reference">Fine reference number</label>
-            <span class="govuk-hint">Example: 'TVL-XXXX-XXX'</span>
+            <label class="govuk-label" for="reference" th:text="#{find.ref.label}">Fine reference number</label>
+            <span class="govuk-hint" th:text="#{find.ref.hint}">Example: 'TVL-XXXX-XXX'</span>
             <input class="govuk-input" id="reference" name="reference" type="text" required>
         </div>
 
         <div class="govuk-form-group">
-            <label class="govuk-label" for="postcode">Postcode</label>
-            <span class="govuk-hint">Example: 'BTX XXX'</span>
+            <label class="govuk-label" for="postcode" th:text="#{find.postcode.label}">Postcode</label>
+            <span class="govuk-hint" th:text="#{find.postcode.hint}">Example: 'BTX XXX'</span>
             <input class="govuk-input" id="postcode" name="postcode" type="text" required>
         </div>
 
-        <button type="submit" class="govuk-button">Continue</button>
+        <button type="submit" class="govuk-button" th:text="#{find.btn}">Continue</button>
     </form>
 </main>
 </body>

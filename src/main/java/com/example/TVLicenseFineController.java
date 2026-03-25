@@ -1,7 +1,28 @@
 package com.example;
 
-import com.lowagie.text.*;
-import com.lowagie.text.Font;
+import java.awt.Color;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import com.lowagie.text.Document;
+import com.lowagie.text.FontFactory;
+import com.lowagie.text.PageSize;
+import com.lowagie.text.Paragraph;
+import com.lowagie.text.Phrase;
 import com.lowagie.text.Rectangle;
 import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfPTable;
@@ -9,19 +30,9 @@ import com.lowagie.text.pdf.PdfWriter;
 import com.stripe.Stripe;
 import com.stripe.model.checkout.Session;
 import com.stripe.param.checkout.SessionCreateParams;
+
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import java.awt.Color;
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.List;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/")
@@ -30,14 +41,21 @@ public class TVLicenseFineController {
     private final TVLicenseFineRepository repo;
     private final TVLicenseTransactionRepository transactionRepo;
     private final TVLicenseStatusRepository statusRepo;
+    private final MessageSource messageSource;
 
     public TVLicenseFineController(TVLicenseFineRepository repo,
                                    TVLicenseTransactionRepository transactionRepo,
-                                   TVLicenseStatusRepository statusRepo) {
+                                   TVLicenseStatusRepository statusRepo,
+                                   MessageSource messageSource) {
         this.repo = repo;
         this.transactionRepo = transactionRepo;
         this.statusRepo = statusRepo;
+        this.messageSource = messageSource;
         Stripe.apiKey = "sk_test_51TEVGrCt5TY5B9EcCm2HAPmwsQGYOGmlhtARd1lWEUMQr1fbYhVuGQAcfnkb5bJVzZryP6SWAPiplwh0egdncnj400TKnGwUe6";
+    }
+
+    private String getMessage(String key) {
+        return messageSource.getMessage(key, null, LocaleContextHolder.getLocale());
     }
 
     @GetMapping
@@ -52,7 +70,7 @@ public class TVLicenseFineController {
         if (!fines.isEmpty()) {
             TVLicenseFine fine = fines.get(0);
             if (fine.getStatus().getStatus_id() == 3L) {
-                redirectAttributes.addFlashAttribute("toast", "This fine has already been paid in full.");
+                redirectAttributes.addFlashAttribute("toast", getMessage("error.paid"));
                 return "redirect:/";
             }
             BigDecimal totalPaid = transactionRepo.findByFine(fine).stream()
@@ -65,7 +83,7 @@ public class TVLicenseFineController {
             model.addAttribute("outstanding", outstanding);
             return "fines/make";
         }
-        model.addAttribute("error", "No records found with the provided details.");
+        model.addAttribute("error", getMessage("error.notfound"));
         return "fines/find";
     }
 
@@ -79,7 +97,7 @@ public class TVLicenseFineController {
         BigDecimal outstanding = fine.getAmountValue().subtract(totalPaidSoFar);
 
         if (amountPaid.compareTo(BigDecimal.ZERO) <= 0 || amountPaid.compareTo(outstanding) > 0) {
-            redirectAttributes.addFlashAttribute("error", "Invalid amount.");
+            redirectAttributes.addFlashAttribute("error", getMessage("error.invalid"));
             return "redirect:/";
         }
 
@@ -155,15 +173,12 @@ public class TVLicenseFineController {
     @GetMapping("/direct-pay/{reference}/{postcode}")
     public String directPay(@PathVariable String reference, @PathVariable String postcode,
                             Model model, RedirectAttributes redirectAttributes) {
-        // Reuse the search logic
         List<TVLicenseFine> fines = repo.findByReferenceAndPostcode(reference, postcode);
 
         if (!fines.isEmpty()) {
             TVLicenseFine fine = fines.get(0);
-
-            // Check if already paid
             if (fine.getStatus().getStatus_id() == 3L) {
-                redirectAttributes.addFlashAttribute("toast", "This fine has already been paid in full.");
+                redirectAttributes.addFlashAttribute("toast", getMessage("error.paid"));
                 return "redirect:/";
             }
 
@@ -176,15 +191,16 @@ public class TVLicenseFineController {
             model.addAttribute("totalAmount", fine.getAmount());
             model.addAttribute("outstanding", outstanding);
 
-            return "fines/make"; // Goes straight to the payment page
+            return "fines/make"; 
         }
 
-        redirectAttributes.addFlashAttribute("error", "No records found for the provided direct link.");
+        redirectAttributes.addFlashAttribute("error", getMessage("error.notfound"));
         return "redirect:/";
     }
 
     @GetMapping("/download-receipt")
     public void downloadReceipt(@RequestParam String transactionId, HttpServletResponse response) throws Exception {
+        // PDF generation logic remains exactly the same as your original code
         TVLicenseTransaction tx = transactionRepo.findByClientTransactionId(transactionId).orElse(null);
         if (tx == null) return;
 
