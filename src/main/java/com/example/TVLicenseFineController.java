@@ -195,7 +195,7 @@ public class TVLicenseFineController {
         panelCell.setPaddingTop(8);
         panelCell.setBorder(Rectangle.NO_BORDER);
 
-        panelCell.addElement(new Paragraph("Payment successful", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 22, Color.WHITE)));
+        panelCell.addElement(new Paragraph("Payment receipt", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 22, Color.WHITE)));
         Paragraph refPara = new Paragraph("Transaction reference: " + transactionId, FontFactory.getFont(FontFactory.HELVETICA, 11, Color.WHITE));
         refPara.setSpacingBefore(8);
         panelCell.addElement(refPara);
