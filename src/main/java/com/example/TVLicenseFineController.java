@@ -121,6 +121,7 @@ public class TVLicenseFineController {
             model.addAttribute("amountPaid", tx.getAmount_paid());
             model.addAttribute("remaining", fine.getAmountValue().subtract(totalPaid));
             model.addAttribute("transactionId", tx.getClient_transaction_id());
+            model.addAttribute("createdAt", tx.getCreated_at().format(DateTimeFormatter.ofPattern("dd-MMMM-yyyy HH:mm:ss")));
             return "fines/confirmation";
         }
 
@@ -145,6 +146,7 @@ public class TVLicenseFineController {
             model.addAttribute("amountPaid", amountPaid);
             model.addAttribute("remaining", remaining);
             model.addAttribute("transactionId", clientTransactionId);
+            model.addAttribute("createdAt", transaction.getCreated_at().format(DateTimeFormatter.ofPattern("dd-MMMM-yyyy HH:mm:ss")));
             return "fines/confirmation";
         }
         return "redirect:/";

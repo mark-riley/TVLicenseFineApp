@@ -46,8 +46,8 @@
             <dd th:text="'£' + ${remaining}"></dd>
 
             <dt style="font-weight: bold;">Date:</dt>
-            <dd th:text="${#temporals.format(#temporals.createNow(), 'dd MMMM yyyy HH:mm')}"></dd>
-
+<!--            <dd th:text="${#temporals.format(#temporals.createNow(), 'dd MMMM yyyy HH:mm')}"></dd>-->
+            <dd th:text="${createdAt}"></dd>
         </div>
     </dl>
 
