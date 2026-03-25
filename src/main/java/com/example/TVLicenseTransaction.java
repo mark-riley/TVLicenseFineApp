@@ -20,7 +20,6 @@ public class TVLicenseTransaction {
     private String processor_type;
     private String processor_token;
 
-    // New field for the user-facing ID
     private String client_transaction_id;
 
     private LocalDateTime created_at;

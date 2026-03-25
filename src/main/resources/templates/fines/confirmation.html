@@ -6,76 +6,48 @@
     <title>Payment Confirmation - GOV.UK</title>
     <link rel="stylesheet" th:href="@{/css/govstyles.css}">
 </head>
-<body class="govuk-template__body">
-
-<header class="main-header" role="banner">
-    <div class="header-wrapper">
-        <h1 class="logo"><span></span></h1>
-    </div>
+<body>
+<header class="main-header">
+    <div class="header-wrapper"><h1 style="color:white; margin:0;">GOV.UK</h1></div>
 </header>
 
-<main class="content-wrapper govuk-main-wrapper" id="main-content" role="main">
-    <div class="govuk-panel govuk-panel--confirmation" style="background-color: #00703c; color: #ffffff; padding: 35px; text-align: center; margin-bottom: 30px;">
-        <h1 class="govuk-panel__title" style="color: #ffffff; font-size: 3rem; margin-bottom: 20px;">
-            Payment complete
-        </h1>
-        <div class="govuk-panel__body" style="font-size: 1.5rem;">
-            Your transaction ID: <br><strong th:text="${transactionId}"></strong>
+<main class="content-wrapper">
+    <div class="govuk-panel--confirmation">
+        <h1 class="govuk-panel__title">Payment complete</h1>
+        <div class="govuk-panel__body">
+            Your transaction ID:<br>
+            <strong th:text="${transactionId}"></strong>
         </div>
     </div>
 
-    <h2 class="govuk-heading-m">Payment Summary</h2>
-    <p class="govuk-body">A confirmation email has been sent to your registered address.</p>
+    <h2>Payment Summary</h2>
 
-    <dl class="govuk-summary-list" style="margin-bottom: 40px; border: 1px solid #b1b4b6; padding: 25px; background-color: #f3f2f1;">
-        <div style="display: grid; grid-template-columns: 1fr 1.5fr; gap: 15px;">
-
-            <dt style="font-weight: bold;">Fine Reference:</dt>
-            <dd th:text="${fine.reference}"></dd>
-
-            <dt style="font-weight: bold;">Transaction ID:</dt>
-            <dd th:text="${transactionId}"></dd>
-
-            <dt style="font-weight: bold;">Full Name:</dt>
-            <dd th:text="${fine.full_name}"></dd>
-
-            <dt style="font-weight: bold;">Amount Paid:</dt>
-            <dd style="color: #00703c; font-weight: bold;" th:text="'£' + ${amountPaid}"></dd>
-
-            <dt style="font-weight: bold;">Outstanding Balance:</dt>
-            <dd th:text="'£' + ${remaining}"></dd>
-
-            <dt style="font-weight: bold;">Date:</dt>
-            <dd th:text="${#temporals.format(#temporals.createNow(), 'dd MMMM yyyy HH:mm')}"></dd>
-
+    <div class="govuk-summary-list">
+        <div class="govuk-summary-list__row">
+            <div class="govuk-summary-list__key">Fine reference</div>
+            <div class="govuk-summary-list__value" th:text="${fine.reference}"></div>
         </div>
-    </dl>
-
-    <div class="actions" style="display: flex; flex-direction: column; gap: 20px;">
-
-        <a th:href="@{/download-receipt(transactionId=${transactionId})}"
-           class="govuk-button"
-           style="background-color: #1d70b8; text-decoration: none; width: fit-content; display: inline-flex; align-items: center; padding: 10px 20px; color: white; font-weight: bold; border-radius: 0;">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 10px;">
-                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                <polyline points="7 10 12 15 17 10"></polyline>
-                <line x1="12" y1="15" x2="12" y2="3"></line>
-            </svg>
-            Download PDF Receipt
-        </a>
-
-        <p class="govuk-body">
-            <a th:href="@{/}" class="govuk-link" style="color: #1d70b8; text-decoration: underline;">Make another payment</a>
-        </p>
-
-
+        <div class="govuk-summary-list__row">
+            <div class="govuk-summary-list__key">Amount paid</div>
+            <div class="govuk-summary-list__value" th:text="'£' + ${amountPaid}"></div>
+        </div>
+        <div class="govuk-summary-list__row">
+            <div class="govuk-summary-list__key">Balance remaining</div>
+            <div class="govuk-summary-list__value" th:text="'£' + ${remaining}"></div>
+        </div>
+        <div class="govuk-summary-list__row">
+            <div class="govuk-summary-list__key">Date</div>
+            <div class="govuk-summary-list__value" th:text="${#temporals.format(#temporals.createNow(), 'd MMMM yyyy HH:mm')}"></div>
+        </div>
     </div>
+
+    <a th:href="@{/download-receipt(transactionId=${transactionId})}" class="govuk-button">
+        Download PDF Receipt
+    </a>
+
+    <p style="margin-top: 40px;">
+        <a href="/" style="color: #1d70b8;">Return to home</a>
+    </p>
 </main>
-
-<footer class="main-footer" style="background-color: #f3f2f1; height: 100px; margin-top: 60px; border-top: 1px solid #b1b4b6;">
-    <div class="content-wrapper">
-    </div>
-</footer>
-
 </body>
 </html>
