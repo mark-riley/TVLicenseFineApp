@@ -1,7 +1,6 @@
 package com.example;
 
 import jakarta.persistence.*;
-
 import java.math.BigDecimal;
 
 @Entity
@@ -17,6 +16,7 @@ public class TVLicenseFine {
     private String postcode;
     private BigDecimal amount;
     private String deadline;
+
     @ManyToOne(optional = false)
     @JoinColumn(name = "status_id", nullable = false)
     private TVLicenseStatus status;
@@ -32,26 +32,18 @@ public class TVLicenseFine {
         this.status = status;
     }
 
+    public Long getId() {return id;}
     public String getReference() {return reference;}
     public String getFull_name() {return full_name;}
     public String getPostcode() {return postcode;}
-    public String getAmount() {return amount.toString();}
     public String getDeadline() {return deadline;}
 
-    public Long getId() {return id;}
+    // Returns string for the UI
+    public String getAmount() {return amount.toString();}
 
-    public void setReference(String reference) {this.reference = reference;}
-    public void setFull_name(String full_name) {this.full_name = full_name;}
-    public void setPostcode(String postcode) {this.postcode = postcode;}
-    public void setAmount(BigDecimal amount) {this.amount = amount;}
-    public void setDeadline(String deadline) {this.deadline = deadline;}
+    // Helper for calculations
+    public BigDecimal getAmountValue() {return amount;}
 
-    public TVLicenseStatus getStatus() {
-        return status;
-    }
-
-    public void setStatus(TVLicenseStatus status) {
-        this.status = status;
-    }
-
+    public void setStatus(TVLicenseStatus status) {this.status = status;}
+    public TVLicenseStatus getStatus() {return status;}
 }

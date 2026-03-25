@@ -1,48 +1,33 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Make a Payment - Court Fines - GOV.UK</title>
-    <link rel="stylesheet" href="/css/govstyles.css" />
+    <meta charset="UTF-8"><title>Make Payment - GOV.UK</title>
+    <link rel="stylesheet" href="/css/govstyles.css">
 </head>
 <body class="govuk-template__body">
+<header class="main-header"><div class="header-wrapper"><h1 class="logo"><span></span></h1></div></header>
+<main class="content-wrapper govuk-main-wrapper">
+    <h1 class="govuk-heading-xl">Check fine details</h1>
 
-<header class="main-header" role="banner">
-    <div class="header-wrapper"><h1 class="logo"><span></span></h1></div>
-</header>
-
-<main class="content-wrapper govuk-main-wrapper" id="main-content" role="main">
-    <div th:if="${fine}">
-        <fieldset class="govuk-fieldset">
-            <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
-                <h1 class="govuk-fieldset__heading heading-xl">Make a court fine payment</h1>
-            </legend>
-
-            <div class="verification-review-panel govuk-inset-text u-margin-bottom-l">
-                <p class="govuk-body-l govuk-body--bold">Fine Reference: <span th:text="${fine.reference}"></span></p>
-                <p class="govuk-body-l">Payee: <span th:text="${fine.full_name}"></span></p>
-                <p class="govuk-body-m">Amount due: <span th:text="'£' + ${fine.amount}"></span></p>
-            </div>
-
-            <form th:action="@{/submit-payment}" method="post">
-                <input type="hidden" name="fineId" th:value="${fine.id}">
-
-                <div class="govuk-form-group">
-                    <label class="govuk-label govuk-label--m" for="payment-amount">Payment Amount</label>
-                    <div class="govuk-currency-input">
-                        <span class="govuk-currency-input__symbol">£</span>
-                        <input class="govuk-input govuk-input--width-10" id="payment-amount" name="amountPaid"
-                               type="number" step="0.01" th:value="${fine.amount}" required>
-                    </div>
-                </div>
-
-                <div class="actions u-margin-top-l">
-                    <button type="submit" class="govuk-button btn-confirm">Continue to Stripe</button>
-                </div>
-            </form>
-        </fieldset>
+    <div class="govuk-inset-text" style="background: #f3f2f1; padding: 20px; border-left: 10px solid #b1b4b6;">
+        <p class="govuk-body"><strong>Fine Reference:</strong> <span th:text="${fine.reference}"></span></p>
+        <p class="govuk-body"><strong>Full Name:</strong> <span th:text="${fine.full_name}"></span></p>
+        <p class="govuk-body"><strong>Total Fine Amount:</strong> <span th:text="'£' + ${totalAmount}"></span></p>
+        <p class="govuk-body"><strong>Outstanding Balance:</strong> <span style="color: #d4351c; font-weight: bold;" th:text="'£' + ${outstanding}"></span></p>
     </div>
+
+    <form th:action="@{/submit-payment}" method="post">
+        <input type="hidden" name="fineId" th:value="${fine.id}">
+        <div class="govuk-form-group">
+            <label class="govuk-label" for="amountPaid">Amount to pay (£)</label>
+            <div id="hint" class="govuk-hint">Enter an amount up to <span th:text="'£' + ${outstanding}"></span></div>
+            <input class="govuk-input" id="amountPaid" name="amountPaid"
+                   type="number" step="0.01" min="0.01"
+                   th:max="${outstanding}" value=""
+                   placeholder="0.00" required>
+        </div>
+        <button type="submit" class="govuk-button" style="background-color: #00703c;">Continue to payment</button>
+    </form>
 </main>
 </body>
 </html>
