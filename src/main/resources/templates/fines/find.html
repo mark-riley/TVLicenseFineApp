@@ -6,17 +6,31 @@
     <title th:text="#{find.title} + ' - GOV.UK'">Find your fine - GOV.UK</title>
     <link rel="stylesheet" th:href="@{/css/govstyles.css}">
 </head>
-<body>
-<header class="main-header">
+<body class="govuk-template__body">
+
+<header class="main-header" role="banner">
     <div class="header-wrapper">
-        <h1 style="color:white; margin:0; display:inline-block;">GOV.UK</h1>
-        
-        <div style="float: right; margin-top: 5px; color: white;">
-            <span th:if="${#locale.language == 'en'}"><strong>English</strong> | <a th:href="@{/(lang='cy')}" style="color: white; text-decoration: underline;">Cymraeg</a></span>
-            <span th:if="${#locale.language == 'cy'}"><a th:href="@{/(lang='en')}" style="color: white; text-decoration: underline;">English</a> | <strong>Cymraeg</strong></span>
-        </div>
+        <h1 style="color:white; margin:0; padding: 15px 0;">GOV.UK</h1>
     </div>
 </header>
+
+<section class="govuk-language-select">
+    <div class="header-wrapper">
+        <ul>
+            <li>
+                <span th:if="${#locale.language == 'en'}" class="active-lang">English</span>
+                <a th:if="${#locale.language != 'en'}" 
+                   th:href="@{/(lang='en')}">English</a>
+            </li>
+            <li style="color: #b1b4b6;">|</li>
+            <li>
+                <span th:if="${#locale.language == 'cy'}" class="active-lang">Cymraeg</span>
+                <a th:if="${#locale.language != 'cy'}" 
+                   th:href="@{/(lang='cy')}">Cymraeg</a>
+            </li>
+        </ul>
+    </div>
+</section>
 
 <main class="content-wrapper">
     <h1 th:text="#{find.title}">Find your fine</h1>
