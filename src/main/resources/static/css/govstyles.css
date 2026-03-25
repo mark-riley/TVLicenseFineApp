@@ -4,9 +4,9 @@
   --govuk-secondary-text: #505a5f;
   --govuk-green: #00703c;
   --govuk-border-light: #b1b4b6;
+  --govuk-focus-yellow: #ffdd00;
   --govuk-page-bg: #ffffff;
   --govuk-footer-bg: #f3f2f1;
-  --govuk-error-red: #d4351c;
 }
 
 * { box-sizing: border-box; }
@@ -14,7 +14,6 @@
 body {
   font-family: "GDS Transport", arial, sans-serif;
   color: var(--govuk-text-black);
-  background-color: var(--govuk-page-bg);
   margin: 0;
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
@@ -24,110 +23,75 @@ body {
 .header-wrapper, .content-wrapper {
   max-width: 960px;
   margin: 0 auto;
-  padding: 0 15px; /* Mobile safety padding */
-}
-
-@media (min-width: 641px) {
-  .header-wrapper, .content-wrapper { padding: 0 30px; }
+  padding: 0 15px; /* Keeps content from touching screen edges */
 }
 
 .main-header {
   background-color: var(--govuk-brand-blue);
   padding: 10px 0;
+  border-bottom: 10px solid var(--govuk-focus-yellow);
 }
 
 .content-wrapper { padding-top: 30px; padding-bottom: 30px; }
 
 /* --- Typography --- */
-h1 { font-size: 1.75rem; margin: 0 0 20px 0; font-weight: bold; }
-h2 { font-size: 1.25rem; margin: 25px 0 15px 0; }
-.govuk-body { font-size: 1.1rem; margin-bottom: 20px; }
+h1 { font-size: 1.75rem; margin-bottom: 20px; font-weight: bold; }
+@media (min-width: 641px) { h1 { font-size: 2.5rem; } }
 
-@media (min-width: 641px) {
-  h1 { font-size: 2.5rem; }
-  h2 { font-size: 1.75rem; }
+/* --- The Gray Inset Box (Fix for Mobile Width) --- */
+.govuk-inset-text {
+  background: var(--govuk-footer-bg);
+  padding: 15px;
+  border-left: 10px solid var(--govuk-border-light);
+  margin: 20px 0;
+  width: 100%;
+  box-sizing: border-box; /* Ensures padding is included in the 100% width */
+  overflow-wrap: break-word;
+  word-break: break-word; /* Additional support for older browsers */
 }
 
-/* --- Forms --- */
+.govuk-inset-text p {
+  margin: 5px 0;
+  font-size: 1.1rem;
+}
+
+html, body {
+  overflow-x: hidden;
+  width: 100%;
+  position: relative;
+}
+
+/* --- Form Elements --- */
 .govuk-form-group { margin-bottom: 25px; }
-.govuk-label { display: block; font-weight: bold; margin-bottom: 5px; font-size: 1.1rem; }
-.govuk-hint { color: var(--govuk-secondary-text); margin-bottom: 10px; display: block; font-size: 0.95rem; }
+.govuk-label { display: block; font-weight: bold; margin-bottom: 5px; }
+.govuk-hint { color: var(--govuk-secondary-text); display: block; margin-bottom: 10px; }
 
 .govuk-input {
   width: 100%;
   max-width: 100%;
   height: 40px;
   padding: 5px;
-  font-size: 1.1rem;
   border: 2px solid var(--govuk-text-black);
   border-radius: 0;
+  font-size: 1.1rem;
 }
 
 @media (min-width: 641px) {
-  .govuk-input { max-width: 450px; } /* Limits width on desktop so it doesn't look stretched */
+  .govuk-input { max-width: 450px; }
 }
 
 .govuk-button {
+  display: inline-block;
   background-color: var(--govuk-green);
   color: white;
   padding: 12px 24px;
   border: none;
   font-weight: bold;
-  font-size: 1.1rem;
-  cursor: pointer;
-  display: inline-block;
   text-decoration: none;
-  box-shadow: 0 2px 0 #002d18; /* Subtle depth on green button */
+  text-align: center;
+  cursor: pointer;
 }
-
-.govuk-button:active { top: 2px; box-shadow: none; }
 
 @media (max-width: 640px) {
-  .govuk-button { width: 100%; text-align: center; }
+  .govuk-button { width: 100%; }
 }
-
-/* --- Components --- */
-.govuk-inset-text {
-  background: var(--govuk-footer-bg);
-  padding: 15px;
-  border-left: 10px solid var(--govuk-border-light);
-  margin: 20px 0;
-}
-
-.govuk-error-summary {
-  border: 4px solid var(--govuk-error-red);
-  padding: 15px;
-  margin-bottom: 30px;
-  color: var(--govuk-error-red);
-  font-weight: bold;
-}
-
-.govuk-panel--confirmation {
-  background-color: var(--govuk-green);
-  color: #ffffff;
-  padding: 35px 15px;
-  text-align: center;
-  margin-bottom: 30px;
-}
-
-/* --- Responsive Summary List (Confirmation Page) --- */
-.govuk-summary-list {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 30px;
-}
-
-.govuk-summary-list__row {
-  padding: 15px 0;
-  border-top: 1px solid var(--govuk-border-light);
-  display: flex;
-  flex-direction: column;
-}
-
-@media (min-width: 641px) {
-  .govuk-summary-list__row { flex-direction: row; }
-  .govuk-summary-list__key { width: 30%; }
-  .govuk-summary-list__value { width: 70%; }
-}
-
-.govuk-summary-list__key { font-weight: bold; margin-bottom: 5px; }
