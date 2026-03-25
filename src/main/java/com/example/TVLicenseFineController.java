@@ -21,7 +21,6 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.stream.StreamSupport;
 
 @Controller
 @RequestMapping("/")
@@ -118,7 +117,12 @@ public class TVLicenseFineController {
             TVLicenseFine fine = repo.findById(fineId).orElseThrow();
             BigDecimal amountPaid = new BigDecimal(session.getAmountTotal()).divide(new BigDecimal(100));
 
-            TVLicenseTransaction transaction = new TVLicenseTransaction(fine, amountPaid, "Stripe", sessionId, LocalDateTime.now());
+            // Generate the client-facing ID: Fine Reference + ddHHmmss (8 digits)
+            String timestampAppend = LocalDateTime.now().format(DateTimeFormatter.ofPattern("ddHHmmss"));
+            String clientTransactionId = fine.getReference() + timestampAppend;
+
+            // Save transaction with both the Stripe token and the client ID
+            TVLicenseTransaction transaction = new TVLicenseTransaction(fine, amountPaid, "Stripe", sessionId, clientTransactionId, LocalDateTime.now());
             transactionRepo.save(transaction);
 
             BigDecimal totalPaid = transactionRepo.findByFine(fine).stream()
@@ -136,7 +140,8 @@ public class TVLicenseFineController {
             model.addAttribute("fine", fine);
             model.addAttribute("amountPaid", amountPaid);
             model.addAttribute("remaining", remaining);
-            model.addAttribute("transactionId", sessionId);
+            model.addAttribute("transactionId", clientTransactionId);
+
             return "fines/confirmation";
         }
         return "redirect:/";
@@ -147,9 +152,8 @@ public class TVLicenseFineController {
         response.setContentType("application/pdf");
         response.setHeader("Content-Disposition", "attachment; filename=GOVUK_Receipt_" + transactionId + ".pdf");
 
-        TVLicenseTransaction tx = StreamSupport.stream(transactionRepo.findAll().spliterator(), false)
-                .filter(t -> t.getProcessor_token().equals(transactionId))
-                .findFirst().orElse(null);
+        // Search using the new DB query for the client_transaction_id
+        TVLicenseTransaction tx = transactionRepo.findByClientTransactionId(transactionId).orElse(null);
 
         if (tx == null) return;
 

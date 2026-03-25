@@ -19,21 +19,31 @@ public class TVLicenseTransaction {
     private BigDecimal amount_paid;
     private String processor_type;
     private String processor_token;
+
+    // New field for the user-facing ID
+    private String client_transaction_id;
+
     private LocalDateTime created_at;
 
     public TVLicenseTransaction() {
     }
 
-    public TVLicenseTransaction(TVLicenseFine fine, BigDecimal amount_paid, String processor_type, String processor_token, LocalDateTime created_at) {
+    public TVLicenseTransaction(TVLicenseFine fine, BigDecimal amount_paid, String processor_type, String processor_token, String client_transaction_id, LocalDateTime created_at) {
         this.fine = fine;
         this.amount_paid = amount_paid;
         this.processor_type = processor_type;
         this.processor_token = processor_token;
+        this.client_transaction_id = client_transaction_id;
         this.created_at = created_at;
     }
 
+    public String getClient_transaction_id() {
+        return client_transaction_id;
+    }
 
-
+    public void setClient_transaction_id(String client_transaction_id) {
+        this.client_transaction_id = client_transaction_id;
+    }
 
     public BigDecimal getAmount_paid() {
         return amount_paid;
