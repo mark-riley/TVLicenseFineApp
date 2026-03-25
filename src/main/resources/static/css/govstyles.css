@@ -38,14 +38,17 @@ h1 { font-size: 1.75rem; margin-bottom: 20px; font-weight: bold; }
 
 /* --- The Gray Inset Box (Fix for Mobile Width) --- */
 .govuk-inset-text {
-  background: var(--govuk-footer-bg);
-  padding: 15px;
-  border-left: 10px solid var(--govuk-border-light);
-  margin: 20px 0;
-  width: 100%;
-  box-sizing: border-box; /* Ensures padding is included in the 100% width */
-  overflow-wrap: break-word;
-  word-break: break-word; /* Additional support for older browsers */
+  background: var(--govuk-footer-bg); /* */
+  padding: 15px 25px 15px 15px; /* Added extra padding to the right */
+  border-left: 10px solid var(--govuk-border-light); /* */
+  margin: 20px 0; /* */
+
+  /* The Key Changes */
+  display: inline-block;
+  width: auto;
+  max-width: 100%;
+  box-sizing: border-box; /* */
+  overflow-wrap: break-word; /* */
 }
 
 .govuk-inset-text p {
