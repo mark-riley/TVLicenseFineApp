@@ -150,6 +150,37 @@ public class TVLicenseFineController {
         return "redirect:/";
     }
 
+    @GetMapping("/direct-pay/{reference}/{postcode}")
+    public String directPay(@PathVariable String reference, @PathVariable String postcode,
+                            Model model, RedirectAttributes redirectAttributes) {
+        // Reuse the search logic
+        List<TVLicenseFine> fines = repo.findByReferenceAndPostcode(reference, postcode);
+
+        if (!fines.isEmpty()) {
+            TVLicenseFine fine = fines.get(0);
+
+            // Check if already paid
+            if (fine.getStatus().getStatus_id() == 3L) {
+                redirectAttributes.addFlashAttribute("toast", "This fine has already been paid in full.");
+                return "redirect:/";
+            }
+
+            BigDecimal totalPaid = transactionRepo.findByFine(fine).stream()
+                    .map(TVLicenseTransaction::getAmount_paid)
+                    .reduce(BigDecimal.ZERO, BigDecimal::add);
+            BigDecimal outstanding = fine.getAmountValue().subtract(totalPaid);
+
+            model.addAttribute("fine", fine);
+            model.addAttribute("totalAmount", fine.getAmount());
+            model.addAttribute("outstanding", outstanding);
+
+            return "fines/make"; // Goes straight to the payment page
+        }
+
+        redirectAttributes.addFlashAttribute("error", "No records found for the provided direct link.");
+        return "redirect:/";
+    }
+
     @GetMapping("/download-receipt")
     public void downloadReceipt(@RequestParam String transactionId, HttpServletResponse response) throws Exception {
         TVLicenseTransaction tx = transactionRepo.findByClientTransactionId(transactionId).orElse(null);
